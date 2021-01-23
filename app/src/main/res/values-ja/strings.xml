@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MyBook</string>
+    <string name="hint_title">タイトル</string>
+    <string name="hint_author">著者</string>
+    <string name="hint_pages">ページ数</string>
+    <string name="btn_lbl_add">新規作成</string>
+</resources>

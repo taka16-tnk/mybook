@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MyBook</string>
+    <string name="hint_title">Book Title</string>
+    <string name="hint_author">Book Author</string>
+    <string name="hint_pages">Number Of Pages</string>
+    <string name="btn_lbl_add">Add</string>
+</resources>
