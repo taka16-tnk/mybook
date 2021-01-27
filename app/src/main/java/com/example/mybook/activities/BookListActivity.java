@@ -1,5 +1,6 @@
 package com.example.mybook.activities;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,9 +50,17 @@ public class BookListActivity extends AppCompatActivity {
 
         storeDataInArrays();
 
-        customAdapter = new CustomAdapter(BookListActivity.this, book_id, book_title, book_author, book_pages);
+        customAdapter = new CustomAdapter(BookListActivity.this, this, book_id, book_title, book_author, book_pages);
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(BookListActivity.this));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            recreate();
+        }
     }
 
     void storeDataInArrays(){
