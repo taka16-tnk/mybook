@@ -5,10 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mybook.CustomAdapter;
@@ -22,6 +29,8 @@ public class BookListActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     FloatingActionButton add_btn;
+    ImageView empty_iv;
+    TextView no_data_txt;
 
     DatabaseHelper myDB;
     ArrayList<String> book_id, book_title, book_author, book_pages;
@@ -33,6 +42,8 @@ public class BookListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_book_list);
 
         recyclerView = findViewById(R.id.recyclerView);
+        empty_iv = findViewById(R.id.empty_iv);
+        no_data_txt = findViewById(R.id.no_data_txt);
         add_btn = findViewById(R.id.add_btn);
         add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,7 +77,8 @@ public class BookListActivity extends AppCompatActivity {
     void storeDataInArrays(){
         Cursor cursor = myDB.readAllData();
         if (cursor.getCount() == 0) {
-            Toast.makeText(this, "No data.", Toast.LENGTH_SHORT).show();
+            empty_iv.setVisibility(View.VISIBLE);
+            no_data_txt.setVisibility(View.VISIBLE);
         } else {
             while (cursor.moveToNext()) {
                 book_id.add(cursor.getString(0));
@@ -74,6 +86,48 @@ public class BookListActivity extends AppCompatActivity {
                 book_author.add(cursor.getString(2));
                 book_pages.add(cursor.getString(3));
             }
+            empty_iv.setVisibility(View.GONE);
+            no_data_txt.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.my_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.delete_all) {
+            confirmDialog();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    void confirmDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Delete All?");
+        builder.setMessage("Are you sure you want to delete all Data?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                DatabaseHelper myDB = new DatabaseHelper(BookListActivity.this);
+                myDB.deleteAllData();
+
+                // Refresh Activity
+                Intent intent = new Intent(BookListActivity.this, BookListActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.create().show();
     }
 }

@@ -71,6 +71,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    // 更新処理
     public void updateData(String row_id, String title, String author, String pages) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -84,5 +85,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } else {
             Toast.makeText(context, "Successfully Updated!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    // 削除処理
+    public void deleteOneRow(String row_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result = db.delete(TABLE_NAME, COL_ID + " = ?", new String[]{row_id});
+        if (result == -1) {
+            Toast.makeText(context, "Failed to Delete", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Successfully Deleted.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // 全削除処理
+    public void deleteAllData() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + TABLE_NAME);
     }
 }

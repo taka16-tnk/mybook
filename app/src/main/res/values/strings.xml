@@ -5,4 +5,6 @@
     <string name="hint_pages">Number Of Pages</string>
     <string name="btn_lbl_add">Add</string>
     <string name="btn_lbl_update">Update</string>
+    <string name="btn_lbl_delete">Delete</string>
+    <string name="menu_delete_all">Delete all</string>
 </resources>

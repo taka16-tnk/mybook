@@ -50,9 +50,20 @@
         android:layout_marginTop="40dp"
         android:text="@string/btn_lbl_update"
         android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pages_edit" />
+
+    <Button
+        android:id="@+id/delete_btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/btn_lbl_delete"
+        android:textColor="#E91E1E"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/update_btn_submit" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
