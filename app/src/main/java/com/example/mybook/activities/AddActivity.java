@@ -7,13 +7,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.mybook.MyApplication;
 import com.example.mybook.R;
+import com.example.mybook.data.BooksRepository;
 import com.example.mybook.data.DatabaseHelper;
 
 public class AddActivity extends AppCompatActivity {
 
     EditText title_input, author_input, pages_input;
     Button add_btn_submit;
+
+    private BooksRepository booksRepository = MyApplication.getInstance().getBooksRepository();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,12 +31,15 @@ public class AddActivity extends AppCompatActivity {
         add_btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatabaseHelper myDB = new DatabaseHelper(AddActivity.this);
-                myDB.addData(title_input.getText().toString().trim(),
+                //DatabaseHelper myDB = new DatabaseHelper(AddActivity.this);
+                booksRepository.addData(title_input.getText().toString().trim(),
                         author_input.getText().toString().trim(),
                         Integer.valueOf(pages_input.getText().toString().trim()));
             }
         });
     }
 
+
+    @Override
+    public void onBackPressed() { }
 }

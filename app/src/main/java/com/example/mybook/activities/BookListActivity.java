@@ -19,7 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mybook.CustomAdapter;
+import com.example.mybook.MyApplication;
 import com.example.mybook.R;
+import com.example.mybook.data.BooksRepository;
 import com.example.mybook.data.DatabaseHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -35,6 +37,8 @@ public class BookListActivity extends AppCompatActivity {
     DatabaseHelper myDB;
     ArrayList<String> book_id, book_title, book_author, book_pages;
     CustomAdapter customAdapter;
+
+    private BooksRepository booksRepository = MyApplication.getInstance().getBooksRepository();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +79,7 @@ public class BookListActivity extends AppCompatActivity {
     }
 
     void storeDataInArrays(){
-        Cursor cursor = myDB.readAllData();
+        Cursor cursor = booksRepository.readAllData();
         if (cursor.getCount() == 0) {
             empty_iv.setVisibility(View.VISIBLE);
             no_data_txt.setVisibility(View.VISIBLE);
@@ -113,8 +117,8 @@ public class BookListActivity extends AppCompatActivity {
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                DatabaseHelper myDB = new DatabaseHelper(BookListActivity.this);
-                myDB.deleteAllData();
+                //DatabaseHelper myDB = new DatabaseHelper(BookListActivity.this);
+                booksRepository.deleteAllData();
 
                 // Refresh Activity
                 Intent intent = new Intent(BookListActivity.this, BookListActivity.class);

@@ -11,7 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.mybook.MyApplication;
 import com.example.mybook.R;
+import com.example.mybook.data.BooksRepository;
 import com.example.mybook.data.DatabaseHelper;
 
 public class UpdateActivity extends AppCompatActivity {
@@ -20,6 +22,8 @@ public class UpdateActivity extends AppCompatActivity {
     Button update_btn_submit, delete_btn_submit;
 
     String id, title, author, pages;
+
+    private BooksRepository booksRepository = MyApplication.getInstance().getBooksRepository();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +47,11 @@ public class UpdateActivity extends AppCompatActivity {
         update_btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DatabaseHelper myDB = new DatabaseHelper(UpdateActivity.this);
+                //DatabaseHelper myDB = new DatabaseHelper(UpdateActivity.this);
                 title = title_edit.getText().toString().trim();
                 author = author_edit.getText().toString().trim();
                 pages = pages_edit.getText().toString().trim();
-                myDB.updateData(id, title, author, pages);
+                booksRepository.updateData(id, title, author, pages);
             }
         });
 
@@ -57,7 +61,6 @@ public class UpdateActivity extends AppCompatActivity {
                 confirmDialog();
             }
         });
-
 
 
     }
@@ -87,8 +90,8 @@ public class UpdateActivity extends AppCompatActivity {
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                DatabaseHelper myDB = new DatabaseHelper(UpdateActivity.this);
-                myDB.deleteOneRow(id);
+                //DatabaseHelper myDB = new DatabaseHelper(UpdateActivity.this);
+                booksRepository.deleteOneRow(id);
                 finish();
             }
         });
@@ -100,4 +103,7 @@ public class UpdateActivity extends AppCompatActivity {
         });
         builder.create().show();
     }
+
+    @Override
+    public void onBackPressed() { }
 }
