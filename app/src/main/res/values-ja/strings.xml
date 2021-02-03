@@ -8,4 +8,8 @@
     <string name="btn_lbl_update">更新</string>
     <string name="btn_lbl_delete">削除</string>
     <string name="menu_delete_all">全削除</string>
+    <string name="msg_update">更新しました</string>
+    <string name="msg_add">保存しました</string>
+    <string name="msg_delete">削除しました</string>
+    <string name="msg_no_data">データがありません</string>
 </resources>

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,7 +15,8 @@ import android.widget.Toast;
 import com.example.mybook.MyApplication;
 import com.example.mybook.R;
 import com.example.mybook.data.BooksRepository;
-import com.example.mybook.data.DatabaseHelper;
+
+import static com.example.mybook.services.CommonHelper.showToast;
 
 public class UpdateActivity extends AppCompatActivity {
 
@@ -22,6 +24,8 @@ public class UpdateActivity extends AppCompatActivity {
     Button update_btn_submit, delete_btn_submit;
 
     String id, title, author, pages;
+
+    Handler handler;
 
     private BooksRepository booksRepository = MyApplication.getInstance().getBooksRepository();
 
@@ -36,6 +40,8 @@ public class UpdateActivity extends AppCompatActivity {
         update_btn_submit = findViewById(R.id.update_btn_submit);
         delete_btn_submit = findViewById(R.id.delete_btn_submit);
 
+        handler = new Handler(this.getMainLooper());
+
         getAndSetIntentData();
 
         // Set actionbar title after getAndSetIntentData method
@@ -47,11 +53,14 @@ public class UpdateActivity extends AppCompatActivity {
         update_btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //DatabaseHelper myDB = new DatabaseHelper(UpdateActivity.this);
+
                 title = title_edit.getText().toString().trim();
                 author = author_edit.getText().toString().trim();
                 pages = pages_edit.getText().toString().trim();
                 booksRepository.updateData(id, title, author, pages);
+
+                showToast(handler, getApplicationContext(), R.string.msg_update);
+
             }
         });
 
@@ -79,7 +88,7 @@ public class UpdateActivity extends AppCompatActivity {
             author_edit.setText(author);
             pages_edit.setText(pages);
         } else {
-            Toast.makeText(this, "No data.", Toast.LENGTH_SHORT).show();
+            showToast(handler, getApplicationContext(), R.string.msg_no_data);
         }
     }
 
@@ -90,8 +99,8 @@ public class UpdateActivity extends AppCompatActivity {
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                //DatabaseHelper myDB = new DatabaseHelper(UpdateActivity.this);
                 booksRepository.deleteOneRow(id);
+                showToast(handler, getApplicationContext(), R.string.msg_delete);
                 finish();
             }
         });

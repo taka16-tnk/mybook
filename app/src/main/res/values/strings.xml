@@ -7,4 +7,8 @@
     <string name="btn_lbl_update">Update</string>
     <string name="btn_lbl_delete">Delete</string>
     <string name="menu_delete_all">Delete all</string>
+    <string name="msg_update">Successfully Updated</string>
+    <string name="msg_add">Saved data</string>
+    <string name="msg_delete">Successfully Deleted.</string>
+    <string name="msg_no_data">No data.</string>
 </resources>

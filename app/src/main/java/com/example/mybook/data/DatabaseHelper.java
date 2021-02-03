@@ -18,13 +18,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "BookLibrary.db";
     private static final int DATABASE_VERSION = 1;  //カラム追加などで変更を加えた場合にカウントアップする
 
-    // BooksRepositoryクラスに移動
-//    private static final String TABLE_NAME = "book";
-//
-//    private static final String COL_ID = "_id";
-//    private static final String COL_TITLE = "book_title";
-//    private static final String COL_AUTHOR = "book_author";
-//    private static final String COL_PAGES = "book_pages";
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -48,63 +41,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    //BooksRepositoryクラスに移動
-//    public void addData(String title, String author, int pages) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues cv = new ContentValues();
-//
-//        cv.put(COL_TITLE, title);
-//        cv.put(COL_AUTHOR, author);
-//        cv.put(COL_PAGES, pages);
-//        long result = db.insert(TABLE_NAME, null, cv);
-//        if (result == -1) {
-//            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
-//        } else {
-//            Toast.makeText(context, "Added Successfully!", Toast.LENGTH_SHORT).show();
-//        }
-//    }
-//
-//    public Cursor readAllData() {
-//        String query = "SELECT * FROM " + TABLE_NAME;
-//        SQLiteDatabase db = this.getReadableDatabase();
-//
-//        Cursor cursor = null;
-//        if(db != null) {
-//            cursor = db.rawQuery(query, null);
-//        }
-//        return cursor;
-//    }
-//
-//    // 更新処理
-//    public void updateData(String row_id, String title, String author, String pages) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues cv = new ContentValues();
-//        cv.put(COL_TITLE, title);
-//        cv.put(COL_AUTHOR, author);
-//        cv.put(COL_PAGES, pages);
-//
-//        long result = db.update(TABLE_NAME, cv, COL_ID + " = ?", new String[]{row_id});
-//        if (result == -1) {
-//            Toast.makeText(context, "Failed Updated.", Toast.LENGTH_SHORT).show();
-//        } else {
-//            Toast.makeText(context, "Successfully Updated!", Toast.LENGTH_SHORT).show();
-//        }
-//    }
-//
-//    // 削除処理
-//    public void deleteOneRow(String row_id) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        long result = db.delete(TABLE_NAME, COL_ID + " = ?", new String[]{row_id});
-//        if (result == -1) {
-//            Toast.makeText(context, "Failed to Delete", Toast.LENGTH_SHORT).show();
-//        } else {
-//            Toast.makeText(context, "Successfully Deleted.", Toast.LENGTH_SHORT).show();
-//        }
-//    }
-//
-//    // 全削除処理
-//    public void deleteAllData() {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        db.execSQL("DELETE FROM " + TABLE_NAME);
-//    }
 }
