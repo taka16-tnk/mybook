@@ -12,4 +12,5 @@
     <string name="msg_add">保存しました</string>
     <string name="msg_delete">削除しました</string>
     <string name="msg_no_data">データがありません</string>
+    <string name="msg_failed">失敗しました</string>
 </resources>

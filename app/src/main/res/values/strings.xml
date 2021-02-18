@@ -11,4 +11,5 @@
     <string name="msg_add">Saved data</string>
     <string name="msg_delete">Successfully Deleted.</string>
     <string name="msg_no_data">No data.</string>
+    <string name="msg_failed">Failed</string>
 </resources>

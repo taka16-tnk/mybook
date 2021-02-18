@@ -7,6 +7,13 @@ public class Book {
     private String book_author;
     private int book_pages;
 
+    public Book(int _id, String book_title, String book_author, int book_pages) {
+        this._id = _id;
+        this.book_title = book_title;
+        this.book_author = book_author;
+        this.book_pages = book_pages;
+    }
+
     public int getId() {
         return _id;
     }

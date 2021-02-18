@@ -21,11 +21,13 @@ import android.widget.Toast;
 import com.example.mybook.CustomAdapter;
 import com.example.mybook.MyApplication;
 import com.example.mybook.R;
+import com.example.mybook.data.Book;
 import com.example.mybook.data.BooksRepository;
 import com.example.mybook.data.DatabaseHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BookListActivity extends AppCompatActivity {
 
@@ -34,8 +36,8 @@ public class BookListActivity extends AppCompatActivity {
     ImageView empty_iv;
     TextView no_data_txt;
 
-    DatabaseHelper myDB;
-    ArrayList<String> book_id, book_title, book_author, book_pages;
+//    DatabaseHelper myDB;
+//    ArrayList<String> book_id, book_title, book_author, book_pages;
     CustomAdapter customAdapter;
 
     private BooksRepository booksRepository = MyApplication.getInstance().getBooksRepository();
@@ -57,18 +59,24 @@ public class BookListActivity extends AppCompatActivity {
             }
         });
 
-        myDB = new DatabaseHelper(BookListActivity.this);
-        book_id = new ArrayList<>();
-        book_title = new ArrayList<>();
-        book_author = new ArrayList<>();
-        book_pages = new ArrayList<>();
+//        myDB = new DatabaseHelper(BookListActivity.this);
+//        book_id = new ArrayList<>();
+//        book_title = new ArrayList<>();
+//        book_author = new ArrayList<>();
+//        book_pages = new ArrayList<>();
 
-        storeDataInArrays();
 
-        customAdapter = new CustomAdapter(BookListActivity.this, this, book_id, book_title, book_author, book_pages);
+//        customAdapter = new CustomAdapter(BookListActivity.this, this, book_id, book_title, book_author, book_pages);
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(BookListActivity.this));
     }
+
+    protected void onResume(){
+        super.onResume();
+
+        storeDataInArrays();
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -79,20 +87,23 @@ public class BookListActivity extends AppCompatActivity {
     }
 
     void storeDataInArrays(){
-        Cursor cursor = booksRepository.readAllData();
-        if (cursor.getCount() == 0) {
-            empty_iv.setVisibility(View.VISIBLE);
-            no_data_txt.setVisibility(View.VISIBLE);
-        } else {
-            while (cursor.moveToNext()) {
-                book_id.add(cursor.getString(0));
-                book_title.add(cursor.getString(1));
-                book_author.add(cursor.getString(2));
-                book_pages.add(cursor.getString(3));
-            }
-            empty_iv.setVisibility(View.GONE);
-            no_data_txt.setVisibility(View.GONE);
-        }
+        List<Book> bookList = (ArrayList<Book>)booksRepository.readAllData();
+        CustomAdapter adapter = (CustomAdapter) recyclerView.getAdapter();
+
+//        Cursor cursor = booksRepository.readAllData();
+//        if (cursor.getCount() == 0) {
+//            empty_iv.setVisibility(View.VISIBLE);
+//            no_data_txt.setVisibility(View.VISIBLE);
+//        } else {
+//            while (cursor.moveToNext()) {
+//                book_id.add(cursor.getString(0));
+//                book_title.add(cursor.getString(1));
+//                book_author.add(cursor.getString(2));
+//                book_pages.add(cursor.getString(3));
+//            }
+//            empty_iv.setVisibility(View.GONE);
+//            no_data_txt.setVisibility(View.GONE);
+//        }
     }
 
     @Override

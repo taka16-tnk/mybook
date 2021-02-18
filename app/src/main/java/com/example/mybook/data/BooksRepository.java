@@ -1,10 +1,13 @@
 package com.example.mybook.data;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.widget.Toast;
+
+import java.security.InvalidKeyException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BooksRepository {
 
@@ -23,26 +26,48 @@ public class BooksRepository {
     }
 
 
-    public void addData(String title, String author, int pages) {
+//    public Cursor readAllData() {
+//        String query = "SELECT * FROM " + TABLE_NAME;
+//
+//        Cursor cursor = null;
+//        if(myDB != null) {
+//            cursor = myDB.rawQuery(query, null);
+//        }
+//        return cursor;
+//    }
+    public List<Book> readAllData() {
+        String query = "SELECT * FROM " + TABLE_NAME;
+        ArrayList<Book> bookList = new ArrayList<>();
+
+        try(final Cursor cursor = myDB.rawQuery(query, null)) {
+            while (cursor.moveToNext()) {
+                int id = cursor.getInt(cursor.getColumnIndex(COL_ID));
+                String bookTitle = cursor.getString(cursor.getColumnIndex(COL_TITLE));
+                String bookAuthor = cursor.getString(cursor.getColumnIndex(COL_AUTHOR));
+                int bookPages = cursor.getInt(cursor.getColumnIndex(COL_PAGES));
+
+                final Book book = new Book(id, bookTitle, bookAuthor, bookPages);
+                bookList.add(book);
+
+            }
+        }
+        return bookList;
+    }
+
+
+//    public long addData(String title, String author, int pages) {
+    public long addData(Book book) throws InvalidKeyException, SQLException {
 
         ContentValues cv = new ContentValues();
 
-        cv.put(COL_TITLE, title);
-        cv.put(COL_AUTHOR, author);
-        cv.put(COL_PAGES, pages);
-        myDB.insert(TABLE_NAME, null, cv);
+        cv.put(COL_TITLE, book.getBookTitle());
+        cv.put(COL_AUTHOR, book.getBookAuthor());
+        cv.put(COL_PAGES, book.getBookPages());
+
+        return myDB.insert(TABLE_NAME, null, cv);
 
     }
 
-    public Cursor readAllData() {
-        String query = "SELECT * FROM " + TABLE_NAME;
-
-        Cursor cursor = null;
-        if(myDB != null) {
-            cursor = myDB.rawQuery(query, null);
-        }
-        return cursor;
-    }
 
     // 更新処理
     public void updateData(String row_id, String title, String author, String pages) {
