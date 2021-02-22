@@ -37,8 +37,8 @@ public class BookListActivity extends AppCompatActivity {
     TextView no_data_txt;
 
 //    DatabaseHelper myDB;
-//    ArrayList<String> book_id, book_title, book_author, book_pages;
-    CustomAdapter customAdapter;
+    ArrayList<String> book_id, book_title, book_author, book_pages;
+    CustomAdapter customAdapter = new CustomAdapter();
 
     private BooksRepository booksRepository = MyApplication.getInstance().getBooksRepository();
 
@@ -65,16 +65,19 @@ public class BookListActivity extends AppCompatActivity {
 //        book_author = new ArrayList<>();
 //        book_pages = new ArrayList<>();
 
+        recyclerView.setLayoutManager(new LinearLayoutManager(BookListActivity.this));
+        recyclerView.setHasFixedSize(true);
+
+        recyclerView.setAdapter(customAdapter);
 
 //        customAdapter = new CustomAdapter(BookListActivity.this, this, book_id, book_title, book_author, book_pages);
-        recyclerView.setAdapter(customAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(BookListActivity.this));
     }
 
     protected void onResume(){
         super.onResume();
 
-        storeDataInArrays();
+        //storeDataInArrays();    //前回リスト表示メソッド
+        showBookList();
     }
 
 
@@ -86,9 +89,39 @@ public class BookListActivity extends AppCompatActivity {
         }
     }
 
-    void storeDataInArrays(){
+    //単語データの配列をデータベースから取得してリストに表示する
+    private void showBookList() {
         List<Book> bookList = (ArrayList<Book>)booksRepository.readAllData();
-        CustomAdapter adapter = (CustomAdapter) recyclerView.getAdapter();
+
+        CustomAdapter customAdapter = (CustomAdapter)recyclerView.getAdapter();
+        customAdapter.updateDataSet(bookList);
+
+        if(bookList.size() == 0) {
+            empty_iv.setVisibility(View.VISIBLE);
+            no_data_txt.setVisibility(View.VISIBLE);
+        } else {
+            empty_iv.setVisibility(View.GONE);
+            no_data_txt.setVisibility(View.GONE);
+        }
+
+    }
+
+    //前回までのメソッド
+//    void storeDataInArrays(){
+//        List<Book> bookList = (ArrayList<Book>)booksRepository.readAllData();
+//        customAdapter = (CustomAdapter)recyclerView.getAdapter();
+//
+//        CustomAdapter adapter = (CustomAdapter) recyclerView.getAdapter();
+//
+//        if (bookList.size() == 0) {
+//            empty_iv.setVisibility(View.VISIBLE);
+//            no_data_txt.setVisibility(View.VISIBLE);
+//        } else {
+////            customAdapter.updateDataSet(bookList);
+//            empty_iv.setVisibility(View.GONE);
+//            no_data_txt.setVisibility(View.GONE);
+//        }
+
 
 //        Cursor cursor = booksRepository.readAllData();
 //        if (cursor.getCount() == 0) {
@@ -104,7 +137,7 @@ public class BookListActivity extends AppCompatActivity {
 //            empty_iv.setVisibility(View.GONE);
 //            no_data_txt.setVisibility(View.GONE);
 //        }
-    }
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

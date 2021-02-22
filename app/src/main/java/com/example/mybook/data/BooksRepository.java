@@ -36,22 +36,35 @@ public class BooksRepository {
 //        return cursor;
 //    }
     public List<Book> readAllData() {
-        String query = "SELECT * FROM " + TABLE_NAME;
+
         ArrayList<Book> bookList = new ArrayList<>();
+        String query = "SELECT * FROM " + TABLE_NAME;
 
         try(final Cursor cursor = myDB.rawQuery(query, null)) {
             while (cursor.moveToNext()) {
-                int id = cursor.getInt(cursor.getColumnIndex(COL_ID));
-                String bookTitle = cursor.getString(cursor.getColumnIndex(COL_TITLE));
-                String bookAuthor = cursor.getString(cursor.getColumnIndex(COL_AUTHOR));
-                int bookPages = cursor.getInt(cursor.getColumnIndex(COL_PAGES));
-
-                final Book book = new Book(id, bookTitle, bookAuthor, bookPages);
+                final Book book = buildBookFromCursor(cursor);
                 bookList.add(book);
+//                int id = cursor.getInt(cursor.getColumnIndex(COL_ID));
+//                String bookTitle = cursor.getString(cursor.getColumnIndex(COL_TITLE));
+//                String bookAuthor = cursor.getString(cursor.getColumnIndex(COL_AUTHOR));
+//                int bookPages = cursor.getInt(cursor.getColumnIndex(COL_PAGES));
+//
+//                final Book book = new Book(id, bookTitle, bookAuthor, bookPages);
+//                bookList.add(book);
 
             }
         }
         return bookList;
+    }
+
+    private Book buildBookFromCursor(Cursor c) {
+        int id = c.getInt(c.getColumnIndex(COL_ID));
+        String bookTitle = c.getString(c.getColumnIndex(COL_TITLE));
+        String bookAuthor = c.getString(c.getColumnIndex(COL_AUTHOR));
+        int bookPages = c.getInt(c.getColumnIndex(COL_PAGES));
+
+        final Book book = new Book(id, bookTitle, bookAuthor, bookPages);
+        return book;
     }
 
 
