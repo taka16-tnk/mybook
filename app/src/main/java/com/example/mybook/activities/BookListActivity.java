@@ -38,7 +38,6 @@ public class BookListActivity extends AppCompatActivity {
 
 //    DatabaseHelper myDB;
     ArrayList<String> book_id, book_title, book_author, book_pages;
-    CustomAdapter customAdapter = new CustomAdapter();
 
     private BooksRepository booksRepository = MyApplication.getInstance().getBooksRepository();
 
@@ -59,25 +58,19 @@ public class BookListActivity extends AppCompatActivity {
             }
         });
 
-//        myDB = new DatabaseHelper(BookListActivity.this);
-//        book_id = new ArrayList<>();
-//        book_title = new ArrayList<>();
-//        book_author = new ArrayList<>();
-//        book_pages = new ArrayList<>();
-
         recyclerView.setLayoutManager(new LinearLayoutManager(BookListActivity.this));
         recyclerView.setHasFixedSize(true);
 
+        CustomAdapter customAdapter = new CustomAdapter(BookListActivity.this, this, book_id, book_title, book_author, book_pages);
         recyclerView.setAdapter(customAdapter);
 
-//        customAdapter = new CustomAdapter(BookListActivity.this, this, book_id, book_title, book_author, book_pages);
     }
 
     protected void onResume(){
         super.onResume();
 
-        //storeDataInArrays();    //前回リスト表示メソッド
         showBookList();
+
     }
 
 
@@ -93,8 +86,8 @@ public class BookListActivity extends AppCompatActivity {
     private void showBookList() {
         List<Book> bookList = (ArrayList<Book>)booksRepository.readAllData();
 
-        CustomAdapter customAdapter = (CustomAdapter)recyclerView.getAdapter();
-        customAdapter.updateDataSet(bookList);
+        CustomAdapter showAdapter = (CustomAdapter)recyclerView.getAdapter();
+        showAdapter.updateDataSet(bookList);
 
         if(bookList.size() == 0) {
             empty_iv.setVisibility(View.VISIBLE);
