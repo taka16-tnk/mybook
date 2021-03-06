@@ -59,17 +59,10 @@ public class AddActivity extends AppCompatActivity {
                         showToast(handler, getApplicationContext(), R.string.msg_add);
                     }
                     finish();
-                } catch (InvalidKeyException e) {
-                    e.printStackTrace();
-                    showErrorDialog(e, getApplicationContext());
                 } catch (SQLException e) {
                     e.printStackTrace();
                     showErrorDialog(e, getApplicationContext());
                 }
-
-//                long result = booksRepository.addData(title_input.getText().toString().trim(),
-//                        author_input.getText().toString().trim(),
-//                        Integer.valueOf(pages_input.getText().toString().trim()));
 
             }
 

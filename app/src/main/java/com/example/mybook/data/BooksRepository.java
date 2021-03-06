@@ -26,15 +26,6 @@ public class BooksRepository {
     }
 
 
-//    public Cursor readAllData() {
-//        String query = "SELECT * FROM " + TABLE_NAME;
-//
-//        Cursor cursor = null;
-//        if(myDB != null) {
-//            cursor = myDB.rawQuery(query, null);
-//        }
-//        return cursor;
-//    }
     public List<Book> readAllData() {
 
         ArrayList<Book> bookList = new ArrayList<>();
@@ -44,14 +35,6 @@ public class BooksRepository {
             while (cursor.moveToNext()) {
                 final Book book = buildBookFromCursor(cursor);
                 bookList.add(book);
-//                int id = cursor.getInt(cursor.getColumnIndex(COL_ID));
-//                String bookTitle = cursor.getString(cursor.getColumnIndex(COL_TITLE));
-//                String bookAuthor = cursor.getString(cursor.getColumnIndex(COL_AUTHOR));
-//                int bookPages = cursor.getInt(cursor.getColumnIndex(COL_PAGES));
-//
-//                final Book book = new Book(id, bookTitle, bookAuthor, bookPages);
-//                bookList.add(book);
-
             }
         }
         return bookList;
@@ -68,8 +51,7 @@ public class BooksRepository {
     }
 
 
-//    public long addData(String title, String author, int pages) {
-    public long addData(Book book) throws InvalidKeyException, SQLException {
+    public long addData(Book book) throws SQLException {
 
         ContentValues cv = new ContentValues();
 

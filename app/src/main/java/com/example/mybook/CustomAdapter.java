@@ -25,7 +25,6 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
     private Context context;
     Activity activity;
-    private ArrayList book_id, book_title, book_author, book_pages;
     protected List<Book> bookDataSet = new ArrayList<Book>(){};
 
     public void updateDataSet(List<Book> dataSet) {
@@ -41,15 +40,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
         }
     }
 
-    public CustomAdapter(Activity activity, Context context,
-                         ArrayList book_id, ArrayList book_title, ArrayList book_author, ArrayList book_pages)
-    {
+    public CustomAdapter(Activity activity, Context context) {
         this.activity = activity;
         this.context = context;
-        this.book_id = book_id;
-        this.book_title = book_title;
-        this.book_author = book_author;
-        this.book_pages = book_pages;
     }
 
     @NonNull
@@ -65,16 +58,11 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         // データ表示
         Book book = bookDataSet.get(position);
-        holder.book_id_txt.setText(String.valueOf(book.getId())); ;
+        holder.book_id_txt.setText(String.valueOf(book.getId()));
         holder.book_title_txt.setText(book.getBookTitle());
         holder.book_author_txt.setText(book.getBookAuthor());
         holder.book_pages_txt.setText(String.valueOf(book.getBookPages()));
 
-
-//        holder.book_id_txt.setText(String.valueOf(book_id.get(position)));
-//        holder.book_title_txt.setText(String.valueOf(book_title.get(position)));
-//        holder.book_author_txt.setText(String.valueOf(book_author.get(position)));
-//        holder.book_pages_txt.setText(String.valueOf(book_pages.get(position)));
         holder.mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
